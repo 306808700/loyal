@@ -18,19 +18,10 @@
 tabs.html
 ````
 	<html>
-	<style>
-      	ul,li{padding:0;margin:0}
-		body{font-family:"Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei","微软雅黑",STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif;font-size:14px;line-height:1.5;background:#fff}
-		.first{font-size:16px;font-weight:bold;color:yellow}
-		.active{background-color:#369}
-		tabs{padding:10px;display:block}
-		menu{display:block}
-		menu tab{width:20%;display:inline-block;background-color:gray;color:#fff;text-align:center;height:30px;line-height:30px}
-		ul{display:block;background-color:#369;color:#fff;padding:10px}
-		ul li{margin:15px 5px}
-		ul time{display:block}
-		add{margin:10px}
-	</style>
+	<meta charset="utf-8">
+	<title>tabs Demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui">
+	<link rel="stylesheet"  href="tabs.css"/>
     <body>
 		<div h-controller="tabs">
 			<div h-name="tabs"></div>
@@ -209,10 +200,12 @@ http://dmimi.sinapp.com/mobile/tabs.html
 
 #### VIEW界面模型
 
+````
 // 渲染的几种写法
 {{ name }}
 {{ name | returnFormat() }}
 {{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }} 等等
+````
 
 ##### 绑定的几种写法
 ````
