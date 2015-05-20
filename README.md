@@ -215,6 +215,8 @@ http://dmimi.sinapp.com/mobile/tabs.html
 {{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }} 等等
 
 ##### 绑定的几种写法
+````
+
 "h-on":"click:handle" 
 "h-class":"";
 "h-model":"";
@@ -222,10 +224,11 @@ http://dmimi.sinapp.com/mobile/tabs.html
 "h-text":"";
 "h-init":"";
 "h-watch":"";  或者 "h-watch-add":""; "h-watch-update":""; "h-watch-remove":"";
-
+````
 
 #### DATA数据层操作
 
+````
 // 获取data下key名为name的值，这里的name支持RegExp,如： /active\d/;
 .data.get("name")
 
@@ -237,3 +240,4 @@ http://dmimi.sinapp.com/mobile/tabs.html
 
 // 删除data下key名
 .data.remove("type0");
+````
