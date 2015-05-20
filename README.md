@@ -8,10 +8,25 @@
 
 目前为止只有作者本人在使用（因为只有我知道的东西，哈哈哈） 如果你觉得原创精神可嘉（虽然是个轮子），帮忙点下右上角的 “like”
 
+
+### 怎么用 ?
 这里有个例子可以看
+
+````
+	<html>
+    <body>
+		<div h-controller="tabs">
+			<div h-name="tabs"></div>
+		</div>
+	</body>
+	</html>
+    <script src="tabs.js" charset="utf-8"></script>
+
+````
 
 
 ````
+    var loyal = require("loyal.js");
     var tabs = loyal({
 	    version:1.0,
 	    name:'tabs',
