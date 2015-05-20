@@ -18,7 +18,7 @@
 
 ## demo
 
-http://dmimi.sinapp.com/loyal/tabs.html
+http://dmimi.sinaapp.com/loyal/tabs.html
 
 
 tabs.html
