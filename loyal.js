@@ -46,7 +46,7 @@ function loyal(project) {
 	    };
 	})();
 	(function($) {
-	    $.Dmimi = "dmimi-mobile 1.1";
+	    $.Dmimi = "dmimi-mobile 1.3.1 loyal 定制版";
 	    $._selector = function(selector, dom) {
 	        var doc = dom || document,
 	            arr, domTemp = [],
@@ -691,6 +691,26 @@ function loyal(project) {
 
 
 	            return f;
+	        },
+	        futher: function(ele, str) {
+	            var arr = str.split("."),
+	                len = arr.length,
+	                i = 0,
+	                obj = ele;
+
+	            function fn(ele) {
+	                if (i < len) {
+	                    if(ele[arr[i]]||ele[arr[i]]==0){
+	                        obj = ele[arr[i]];
+	                        i++;
+	                        fn(obj);
+	                    }else{
+	                        obj = false;
+	                    }
+	                }
+	            }
+	            fn(ele);
+	            return obj;
 	        },
 	        template:function(str,json,custom) {
 
@@ -1460,6 +1480,12 @@ function loyal(project) {
 	*/
 	project.run = function(model, data, name, type) {
 
+		if(!model){
+			model = project.view;
+		}
+		if(!data){
+			data = project.data;
+		}
 
 		var html = project.render(model, data);
 		
@@ -1712,6 +1738,7 @@ function loyal(project) {
 			}
 
 
+
 			$.each(dom.find("[h-class]"), function() {
 
 				var key = $(this).attr("h-class");
@@ -1750,6 +1777,8 @@ function loyal(project) {
 					express: express,
 					param: param
 				});
+
+				$(this).removeAttr("h-class");
 			});
 
 			$.each(dom.find("[h-checked]"), function() {
@@ -1762,6 +1791,7 @@ function loyal(project) {
 					key: key,
 					express: jude(key)
 				});
+				$(this).removeAttr("h-checked");
 			});
 
 			$.each(dom.find("[h-value]"), function() {
@@ -1774,6 +1804,7 @@ function loyal(project) {
 					key: key,
 					express: jude(key)
 				});
+				$(this).removeAttr("h-value");
 			});
 
 			$.each(dom.find("[h-text]"), function() {
@@ -1787,6 +1818,8 @@ function loyal(project) {
 					key: key,
 					express: jude(key)
 				});
+				$(this).removeAttr("h-text");
+
 			});
 
 			// style 这里比较特殊， 由于 {{ }} 这种的会被模板引擎过滤。
@@ -1808,6 +1841,7 @@ function loyal(project) {
 					key: key,
 					express: express
 				});
+				$(this).removeAttr("h-style");
 			});
 
 
@@ -1833,6 +1867,7 @@ function loyal(project) {
 					eval(express).apply(el, [param]);
 				}
 
+				$(this).removeAttr("h-init");
 			});
 
 			$.each(dom.find("[h-watch]"), function() {
@@ -1866,6 +1901,7 @@ function loyal(project) {
 						param: param
 					});
 				}
+				$(this).removeAttr("h-watch");
 
 
 
@@ -1900,6 +1936,7 @@ function loyal(project) {
 						param: param
 					});
 				}
+				$(this).removeAttr("h-watch-add");
 			});
 			$.each(dom.find("[h-watch-update]"), function() {
 
@@ -1932,6 +1969,7 @@ function loyal(project) {
 						param: param
 					});
 				}
+				$(this).removeAttr("h-watch-update");
 			});
 
 			$.each(dom.find("[h-model]"), function() {
@@ -1962,6 +2000,7 @@ function loyal(project) {
 					project.data[key] = $(this).val();
 				}
 
+				$(this).removeAttr("h-model");
 			});
 
 
@@ -2022,6 +2061,7 @@ function loyal(project) {
 				}else{
 					doit(key);
 				}
+				$(this).removeAttr("h-on");
 			});
 
 
@@ -2160,4 +2200,4 @@ loyal.init = function(){
 
 window.loyal = loyal;
 
-// 模块化写法 module.exports = loyal;
+//module.exports = loyal;
