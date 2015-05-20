@@ -1,11 +1,95 @@
 # loyal 1.0 beta
 
-创建于时间2015年4月22日，
-这是什么东东，其实我自己也不清楚当初搞这个是为了什么。不过我还是取了名字 loyal 中文名 “洛亚尔”
+创建于时间2015年4月22日，源码加上注释共755行，压缩后有8K。
+
+这是什么东东，我想了一下，也许是一种可以改变开发者思维方式，让复杂的逻辑处理，变的简单的东东。
+
+以前你是这样写代码的
+
+````	
+	<html>
+	...
+		<div class="tabs">
+			<div class="menu">
+				<ul>
+					<li>类型1</li>
+					<li>类型2</li>
+					<li>类型3</li>
+					<li>类型4</li>
+					<li>类型5</li>
+				</ul>
+			</div>
+			<div class="box">
+
+			</div>
+		</div>
+	...
+	</html>
+	<script>
+		var li = $(".menu > li");
+		li.on("click",function(){
+			var box = $(".box");
+			var index = $(this).index();
+			box.append("点了"+index);
+		});
+	</script>
+````
+如上写html， 写js，然后选择器，绑定事件处理，等等～～
+
+用了loyal
+
+````
+	<html>
+	...
+
+		<div h-name="tabs"></div>
+	...
+	</html>
+	<script>
+		var tabs = loyal({
+			name:"tabs",
+			view:{
+				menu:{
+					ul:{
+						repeat:{
+							data:"menu",
+							li:{
+								"h-on":"click:active"
+							}
+						}
+					}
+				},
+				box:{
+					"h-text":"content"
+				}
+			},
+			data:{
+				menu:["类型1","类型2","类型3","类型4"]
+			},
+			event:{
+				active:function(e,i){
+					tabs.data.update("content","哈哈"+i)
+				}
+			},
+			init:function(){
+				tabs.run(tabs.view,tabs.data);
+			}
+		});
+
+		tabs.init();
+
+	</script>
+````
+
+咋一看好像代码量多了许多，（你不觉得高大上许多么），这是因为上例逻辑比较简单，如果是后面demo那样的，优势就出来了。
+
+
+名字好难取，姑且取个名字叫 loyal 吧中文名 “洛亚尔”
 
 不要问我为何取这样的名字，我会告诉你乱打拼音首字母出来的单词吗。
 
-源码加上注释共755行，压缩后有8K。
+
+
 
 ## 目前谁在用
 
