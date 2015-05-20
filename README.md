@@ -17,7 +17,7 @@
 
 ### demo
 
-http://dmimi.sinapp.com/mobile/tabs.html
+http://dmimi.sinapp.com/loyal/tabs.html
 
 
 tabs.html
@@ -192,7 +192,7 @@ tabs.js
 1. 代码逻辑好像要清晰了，做为jser可以不用写html这种文本标记咯，不用让大脑来回切换html js 模式了，是不是很爽。（css的话以后再说，compass sass？？)
 2. 代码看起来，好理解，看下view就知道程序是要干嘛，需要编写的代码量也少了很多，
 2. 比angular更容易上手api简单（中国式英语）只有很少的api，应付目前的项目开发足够了。
-3. 性能高效，用chrome Timeline 进行记录，然后不停的切换选项卡，分别用angularjs和loyal实现，所需要执行次数和内存占用貌似好许多。（其实我想说，这工具还不是很会用）
+3. 性能高效，用chrome Timeline 进行记录，然后不停的切换选项卡，对比用angularjs实现，所需要执行次数和内存占用貌似好许多。（其实我想说，这工具还不是很会用）
 4. 作者本人才疏学浅，不善表达，非常非常需要大家的指正。
 
 
