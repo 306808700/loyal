@@ -181,9 +181,59 @@ tabs.js
 
 如上所示，  html几乎不用写（还是要写的，只是换了更顺手的形式JSON，对就是JSON）
 
-界面模型view，将会被解释渲染为html dom 树插入到容器中，渲染时候还能根据管道函数（helper）输出处理后的数值。
+界面模型view，将会被编译渲染为html dom 树插入到容器中，渲染时候还能根据管道函数（helper）输出处理后的数值。
+
+所有的交互都不和dom发生关系，而是效率更高的数据层交互，然后数据层会去修改dom节点比如切换选项卡，添加当前选项卡className active。
+
+效率高的一个原因是，编译过程中已经将dom(可能需要交互的) 进行缓存，简单讲类似：  var a = $(".a");  后面操作都是用变量a去操作。
+
+你可以说那我之前都是这样写的。效率不是一样么?
+
+答：效率是差不多，只是用了loyal帮你干了这件事。 
+
+总的来说，优点感觉有这么几个，
+
+1. 代码逻辑更清晰，易读和理解，需要编写的代码量也少了很多
+2. 比angular更容易上手，很少的api即可实现其大部分功能呢
+3. 性能高效，用chrome Timeline 进行记录，然后不停的切换选项卡，分别用angularjs和loyal实现，所需要执行次数和内存占用，
+4. 作者本人才疏学浅，非常非常需要高手来评测。
 
 ### 本例demo
 
 http://dmimi.sinapp.com/mobile/tabs.html
 
+
+
+### api
+
+
+#### VIEW界面模型
+
+// 渲染的几种写法
+{{ name }}
+{{ name | returnFormat() }}
+{{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }} 等等
+
+##### 绑定的几种写法
+"h-on":"click:handle" 
+"h-class":"";
+"h-model":"";
+"h-value":"";
+"h-text":"";
+"h-init":"";
+"h-watch":"";  或者 "h-watch-add":""; "h-watch-update":""; "h-watch-remove":"";
+
+
+#### DATA数据层操作
+
+// 获取data下key名为name的值，这里的name支持RegExp,如： /active\d/;
+.data.get("name")
+
+// 更新data下key名active的值为"active",  支持多级如： "list[3].content";
+.data.update("active","active")
+
+// 给data下key名为type0的值添加一个json对象，所以这里的type0属性必定是一个数组
+.data.add("type0",{content:"",time:""});
+
+// 删除data下key名
+.data.remove("type0");
