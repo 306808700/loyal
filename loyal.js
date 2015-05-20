@@ -3,7 +3,7 @@
 	creator changyuan.lcy
 */
 "use strict";
-var $ = require("../lib/dmimi-mobile");
+
 
 Array.prototype.last = function() {
 	return this[this.length - 1];
@@ -22,7 +22,8 @@ window.loyal = function(project) {
 		attr: "(class)|(id)|(type)|(h-[a-z]+)|(href)|(style)|(src)|(controls)|(placeholder)|(height)|(width)|(value)",
 		system: "text$|express|html|data",
 		param: /\(([a-z\d,\s"']+)\)/,
-		removeEx: /\([a-z\d,\s']*\)/
+		removeEx: /\([a-z\d,\s']*\)/,
+		prop:/[a-zA-Z'\d]+/g
 	};
 
 	var domsArr = [];
@@ -67,6 +68,7 @@ window.loyal = function(project) {
                 var fun;
 				eval('fun = function(){return '+express+'}');
                 var data = fun.call(project.data);
+                
 				if( !data ){
 					console.warn("render need data['"+name+"'] but is undefined");
 				}
@@ -113,7 +115,7 @@ window.loyal = function(project) {
 	project.data.remove = function(key, value) {
 
 		if (key.indexOf(".") != -1 || key.indexOf("[") != -1) {
-			var arr = key.match(/[a-zA-Z'\d]+/g);
+			var arr = key.match(reg.prop);
 			var end = arr.pop();
 			var str = "";
 			for (var i = 0; i < arr.length; i++) {
@@ -137,7 +139,7 @@ window.loyal = function(project) {
 		}
 		if (key.indexOf(".") != -1 || key.indexOf("[") != -1) {
 
-			var arr = key.match(/[a-zA-Z'\d]+/g);
+			var arr = key.match(reg.prop);
 			var end = arr.pop();
 			var str = "";
 			for (var i = 0; i < arr.length; i++) {
@@ -152,7 +154,7 @@ window.loyal = function(project) {
 			eval("project.data" + str)[end] = value;
 
 		} else {
-			
+
 			if (project.data[key] == value) {
 				if (!force) {
 					return false;
@@ -749,6 +751,3 @@ loyal.init = function(){
 };
 
 window.loyal = loyal;
-
-
-module.exports =  loyal;
