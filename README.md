@@ -98,7 +98,7 @@
 
 ## 怎么用 ?
 
-这里有个例子可以看  （ps:本例子使用了 npm browserify ，所以可以直接使用require，你也可以这样“配置”，或者引入seajs 或者 requirejs 或者 干脆不用require，直接在index.html里面写script标签引入依赖的js，就像demo这样）
+这里有个例子可以看  （ps:本例子使用了 npm browserify ，所以可以直接使用require，你也可以这样“配置”，或者引入seajs 或者 requirejs 或者 干脆不用require，直接在tabs.html里面写script标签引入依赖的js，就像demo这样）
 
 ## demo
 
@@ -247,7 +247,7 @@ tabs.js
 	        tabs.run();
 	        
 	        // 更新data中的active0 那么对应节点的className会被添加一个"active"；
-	        tabs.data.update("active0","active",true);
+	        tabs.data.update("active0","active");
 	    }
 	});	
 
