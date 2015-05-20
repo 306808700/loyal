@@ -13,7 +13,12 @@
 
 ### 怎么用 ?
 
-这里有个例子可以看  （ps:本例子使用了 npm browserify ，所以可以直接使用require，你也可以这样“配置”，或者引入seajs 或者 requirejs 或者 干脆不用require，直接在index.html里面写script标签引入依赖的js）
+这里有个例子可以看  （ps:本例子使用了 npm browserify ，所以可以直接使用require，你也可以这样“配置”，或者引入seajs 或者 requirejs 或者 干脆不用require，直接在index.html里面写script标签引入依赖的js，就像demo这样）
+
+### demo
+
+http://dmimi.sinapp.com/mobile/tabs.html
+
 
 tabs.html
 ````
@@ -188,10 +193,6 @@ tabs.js
 2. 比angular更容易上手，很少的api即可实现其大部分功能呢
 3. 性能高效，用chrome Timeline 进行记录，然后不停的切换选项卡，分别用angularjs和loyal实现，所需要执行次数和内存占用，
 4. 作者本人才疏学浅，非常非常需要高手来评测。
-
-### 本例demo
-
-http://dmimi.sinapp.com/mobile/tabs.html
 
 
 
