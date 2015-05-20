@@ -72,7 +72,7 @@
 				}
 			},
 			init:function(){
-				tabs.run(tabs.view,tabs.data);
+				tabs.run();
 			}
 		});
 
