@@ -1917,5 +1917,3 @@ loyal.init = function(){
 
 window.loyal = loyal;
 
-
-module.exports =  loyal;
