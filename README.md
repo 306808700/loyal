@@ -291,11 +291,8 @@ tabs.js
 {{ name }}
 {{ name | returnFormat() }}
 {{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }} 等等
-````
 
-#### 绑定的几种写法
-````
-
+// 绑定的几种写法
 "h-on":"click:handle" 
 "h-class":"";
 "h-model":"";
@@ -322,8 +319,8 @@ tabs.js
 ````
 
 
-#### 裸照
+#### 最后
 
-轻轻点下 右上角 ★star 即可看到。
+如果你觉得本文对你有所启发，请点一下右上角star，感谢。
 
 
