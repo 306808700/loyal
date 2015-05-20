@@ -125,11 +125,6 @@ tabs.html
 tabs.js
 ````
     var loyal = require("loyal.js");
-    
-    /*
-    	你也可以选用 zepto jquery 不过本例子用到formatDate 函数等只有dmimi-mobile 才有的功能，所以你得去目录extend里面拷贝代码放到前面
-    */
-    var $ = require("dmimi-mobile.js");
 
     var tabs = loyal({
 	    version:1.0,
@@ -249,7 +244,7 @@ tabs.js
 	    init:function(){
 
 	        // 初始化，生成DOMList
-	        tabs.run(tabs.view ,tabs.data);
+	        tabs.run();
 	        
 	        // 更新data中的active0 那么对应节点的className会被添加一个"active"；
 	        tabs.data.update("active0","active",true);
