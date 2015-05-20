@@ -14,7 +14,7 @@ Array.prototype.insert = function(index, item) {
 
 
 
-window.loyal = function(project) {
+function loyal(project) {
 
 	
 	var self = this;
@@ -2159,3 +2159,5 @@ loyal.init = function(){
 };
 
 window.loyal = loyal;
+
+// 模块化写法 module.exports = loyal;
