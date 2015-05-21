@@ -290,9 +290,8 @@ tabs.js
 // 函数处理后的替换
 {{ name | returnFormat() }} 
 
-
-// 字符表达式执行，return 的值替换
-{{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }}
+// 表达式执行结果值的替换
+{{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }} 等等
 ````
 
 
