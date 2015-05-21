@@ -288,13 +288,100 @@ tabs.js
 {{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }} 等等
 
 // 绑定的几种写法
-"h-on":"click:handle" 
-"h-class":"";
-"h-model":"";
-"h-value":"";
-"h-text":"";
-"h-init":"";
-"h-watch":"";  或者 "h-watch-add":""; "h-watch-update":""; "h-watch-remove":"";
+// 1. 普通事件绑定
+"h-on":"click:handle"
+    ...
+    handle:function(e){
+    	// this == element
+    }
+
+// 2. 带参数的事件函数
+"h-on":"click:handle(1)" 
+	...
+    handle:function(e,i){
+    	// this == element
+    	// i === 1
+    }
+// 3. 事件监听的绑定
+"h-on":"click,li:handle"
+	...
+    handle:function(e,i){
+    	// this == li
+    	// i === 1
+    }
+
+// 1. 普通className 赋值方法
+"h-class":"active";
+
+	project.data.update("active","activeClassName");
+	//element.className === "activeClassName";
+
+// 2. 带函数处理的
+"h-class":"active | handle()";
+	...
+	handle:function(name){
+		// name === project.data[name];
+		// if return "xxxx";
+		// then element.className === "xxxx";
+	}
+
+
+// 1. 控件监听
+"h-model":"active";
+	...
+	// if element isChanged; 
+	// then project.data.active === element.value;
+
+// 2. 控件的赋值
+"h-value":"active";
+	// if project.data.update("active","哈哈哈");
+	// then element.value === "哈哈哈";
+
+// 3. 元素内容
+"h-text":"active";
+	// if project.data.update("active","你妹");
+	// then element.html() === "你妹";
+
+// 初始化的时候就执行了。
+"h-init":"handle";
+	...
+	handle:function(){
+		// if project.run();
+		// then this function will be run;
+	}	
+// 监听active属性的改变，触发handle函数
+"h-watch":"active | handle";
+	...
+	handle:function(param){
+
+		// if active be changed all types
+		// then this function run
+		// param === project.data.active;
+	}
+
+// 改变是add类型的，才会触发handle函数
+"h-watch-add":""; 
+	...
+	handle:function(param){
+
+		// if active be changed by add
+		// then this function run
+		// param === project.data.active;
+	}
+
+"h-watch-update":""; 
+	...
+	handle:function(param){
+
+		// if active be changed by update
+		// then this function run
+		// param === project.data.active;
+	}
+
+more then
+
+"h-watch-update":""; 
+"h-watch-remove":"";
 ````
 
 #### DATA数据层操作
