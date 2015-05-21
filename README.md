@@ -284,16 +284,30 @@ tabs.js
 
 #### 静态渲染的几种写法
 ````
+// 普通替换
 {{ name }}
-{{ name | returnFormat() }}
-{{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }} 等等
+
+// 函数处理后的替换
+{{ name | returnFormat() }} 
+
+
+// 字符表达式执行，return 的值替换
+{{ name ? 'true' : '' }} 或者 {{ name=="lily" ? '20' : '18' }}
 ````
 
 
 #### 动态绑定的几种写法
 ````
-// 1. 普通事件绑定
+// 普通单个事件绑定
 "h-on":"click:handle";
+    ...
+
+    handle:function(e){
+    	// this == element
+    }
+
+// 多个事件绑定写法
+"h-on":"click:handle,focus:isFocus";
     ...
 
     handle:function(e){
@@ -302,7 +316,8 @@ tabs.js
 
 
 
-// 2. 带参数的事件函数
+
+// 带参数的事件函数
 "h-on":"click:handle(1)";
 	...
 
@@ -313,7 +328,7 @@ tabs.js
 
 
 
-// 3. 事件监听的绑定
+// 监听类型的事件绑定
 "h-on":"click,li:handle";
 	...
 
@@ -325,7 +340,7 @@ tabs.js
 
 
 
-// 1. 普通className 赋值方法
+// 普通className 赋值方法
 "h-class":"active";
 	// if project.data.update("active","activeClassName");
 	// then element.className === "activeClassName";
@@ -333,7 +348,7 @@ tabs.js
 
 
 
-// 2. 带函数处理的
+// 带函数处理的
 "h-class":"active | handle()";
 	...
 	handle:function(name){
@@ -345,7 +360,7 @@ tabs.js
 
 
 
-// 1. 控件监听
+// 输入控件监听
 "h-model":"active";
 	...
 	// if element isChanged; 
@@ -354,7 +369,7 @@ tabs.js
 
 
 
-// 2. 控件的赋值
+// 控件的赋值
 "h-value":"active";
 	// if project.data.update("active","哈哈哈");
 	// then element.value === "哈哈哈";
@@ -362,10 +377,10 @@ tabs.js
 
 
 
-// 3. 元素内容
+// 元素内容
 "h-text":"active";
 	// if project.data.update("active","你妹");
-	// then element.html() === "你妹";
+	// then element.text() === "你妹";
 
 
 
