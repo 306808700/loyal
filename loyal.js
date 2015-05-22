@@ -13,11 +13,46 @@ Array.prototype.insert = function(index, item) {
 	this.splice(index, 0, item);
 };
 
+/**
+ * extend object.
+ * means that properties in dest will be overwritten by the ones in src.
+ * @param {Object} dest
+ * @param {Object} src
+ * @param {Boolean} [merge]
+ * @returns {Object} dest
+ */
+loyal
+/**
+ * merge the values from src in the dest.
+ * means that properties that exist in dest will not be overwritten by src
+ * @param {Object} dest
+ * @param {Object} src
+ * @returns {Object} dest
+ */
+function merge(dest, src) {
+    return extend(dest, src, true);
+}
 
-/*  
-    dm.js 
-    dmimi 精简版
-*/
+/**
+ * simple class inheritance
+ * @param {Function} child
+ * @param {Function} base
+ * @param {Object} [properties]
+ */
+function inherit(child, base, properties) {
+    var baseP = base.prototype,
+        childP;
+
+    childP = child.prototype = Object.create(baseP);
+    childP.constructor = child;
+    childP._super = baseP;
+
+    if (properties) {
+        extend(childP, properties);
+    }
+}
+
+
 void function(){
 	var DM = $ =  (function(){
 	    return  function(elem) {
@@ -1468,7 +1503,8 @@ function loyal(project,parent) {
 		this.dom = $("[h-controller=" + self.name + "]");
 		this.memory = {};
 		this.data = loyal.extend({},options.data);
-
+		this.net = options.net || {};
+		this.version = options.version || "1.0";
 
 		this.view = options.view;
 		this.helper = options.helper;
@@ -1520,7 +1556,7 @@ function loyal(project,parent) {
 	                });
 	                var fun;
 					eval('fun = function(){return '+express+'}');
-	                var data = fun.call(subClass.data);
+	                var data = fun.call(self.data);
 
 					if( !data ){
 						console.warn("render need data['"+name+"'] but is undefined");
@@ -2003,11 +2039,11 @@ function loyal(project,parent) {
 
 					$(this).on("change", function() {
 						if (($(this).attr("type") || "").match(/(checkbox)|(radio)/)) {
-							subClass.data[key] = $(this)[0].checked;
+							self.data[key] = $(this)[0].checked;
 						} else if ($(this).attr("type") === "text") {
-							subClass.data[key] = $(this).val();
+							self.data[key] = $(this).val();
 						}else{
-							subClass.data[key] = $(this).val();
+							self.data[key] = $(this).val();
 						}
 
 						self.method.change(key);
@@ -2015,11 +2051,11 @@ function loyal(project,parent) {
 
 
 					if (($(this).attr("type") || "").match(/(checkbox)|(radio)/)) {
-						subClass.data[key] = $(this)[0].checked;
+						self.data[key] = $(this)[0].checked;
 					} else if ($(this).attr("type") === "text") {
-						subClass.data[key] = $(this).val();
+						self.data[key] = $(this).val();
 					}else{
-						subClass.data[key] = $(this).val();
+						self.data[key] = $(this).val();
 					}
 
 					$(this).removeAttr("h-model");
@@ -2255,3 +2291,5 @@ loyal.init = function(){
 
 
 window.loyal = loyal;
+
+module.exports = loyal;
