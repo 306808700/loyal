@@ -86,7 +86,7 @@
 
 名字好难取，姑且取个名字叫 loyal 吧中文名 “洛亚尔”。
 
-不要问我为何取这样的名字，我是不会告诉你乱打拼音首字母出来的 ^.^
+不要问我为何取这样的名字，我是不会告诉你乱打拼音首字母出来的HOHO。
 
 
 
@@ -449,9 +449,72 @@ more then
 .data.remove("type0");
 ````
 
+#### 继承
+
+开放式的继承解决方案
+引用作者民工精髓的文章内容：
+````
+	我在用某个组件时需要重新调整一下组件里面元素的顺序怎么办? 我想要去掉组件里面某一个元素怎么办? 如何把组件变得更易扩展? 具体一点: 业务方不断要求给组件加功能怎么办? 
+````
+Web 前端组件化是个难题
+
+现状：
+* 一些封装严密的组件，内部实现混淆，只提供特定接口，需要限制产品需求在组件所能提供的功能，例如 extjs
+* 一些组件开放源码，一旦需求组件无法满足，由于比较方便添加修改源文件（现状大部分是这样）或者强行在现有的代码写if else 
+  添加参数新增接口，或是拷贝一份做些修改取个新的名字再用，都没有能易用复用 （jQuery 各种插件）
+
+看看loyal 是怎么处理继承问题的。
+````
+	
+	// 改下标题和渲染数据
+	var tabs1 = {
+		name:"tabs1",
+		data:{
+			type0:[
+				{
+					content:"小明天真"
+				}
+			],
+			type2:[
+				{
+					content:"哈哈"
+				}
+			],
+			menu:[
+				"天真","无邪","美丽","可爱"
+			]
+		}
+	};
+	tabs1 = loyal(tabs1,tabs);
+	tabs1.init();
+
+
+	// 选项卡事件触发不同
+	var tabs2 = {
+		name:"tabs2"
+	};
+	tabs2.view = tabs.view.protocol();
+	tabs2.view.menu["h-on"] = "mouseover,tab:activeType()";
+
+
+	tabs2 = loyal(tabs2,tabs);
+	tabs2.init();
+
+	// 选项卡上有图标
+	var tabs3 = {
+		name:"tabs3"
+	};
+	tabs3.view = tabs.view.protocol();
+	tabs3.view.menu.repeat.tab.i = {};
+	tabs3 = loyal(tabs3,tabs);
+	tabs3.init();
+
+````
+
 
 #### 最后
 
 如果觉得本文对你有所启发，请点一下右上角star，感谢。
+
 
 
