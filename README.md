@@ -449,7 +449,7 @@ more then
 .data.remove("type0");
 ````
 
-#### 继承
+## 继承
 
 开放式的继承解决方案
 引用作者民工精髓的文章内容：
@@ -489,16 +489,20 @@ Web 前端组件化是个难题
 	tabs1.init();
 
 
+
+
 	// 选项卡事件触发不同
 	var tabs2 = {
 		name:"tabs2"
 	};
 	tabs2.view = tabs.view.protocol();
 	tabs2.view.menu["h-on"] = "mouseover,tab:activeType()";
-
-
 	tabs2 = loyal(tabs2,tabs);
 	tabs2.init();
+
+
+
+
 
 	// 选项卡上有图标
 	var tabs3 = {
@@ -509,8 +513,9 @@ Web 前端组件化是个难题
 	tabs3 = loyal(tabs3,tabs);
 	tabs3.init();
 
-````
 
+````
+##### 效果可以看上面的demo
 
 #### 最后
 
@@ -518,3 +523,7 @@ Web 前端组件化是个难题
 
 
 
+
+### github
+
+https://github.com/306808700/loyal
