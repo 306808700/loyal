@@ -183,7 +183,11 @@ void function(){
 	DM.plugin("tool", function($) {
 	    var self;
 	    return ({
-	        
+	        xss:function(s){  
+			    var div = document.createElement('div');  
+			    div.appendChild(document.createTextNode(s));  
+			    return div.innerHTML;  
+			},
 	        index: function() {
 	            return this.prevAll().size();
 	        },
@@ -799,7 +803,7 @@ void function(){
 
 	                    // 如果有值才返回，包括0
 	                    if(v2 || v2==0){
-	                        return v2;
+	                        return  v2;
 	                    }else{
 	                        return "";
 	                    }
@@ -812,8 +816,14 @@ void function(){
 	                    var v1,v2,v3 = [];
 	                    var fn;
 	                    var param;
+	                    var xss;
 	                    v = v.replace(/[\{\}]/g,"");
 
+
+	                    // 不需要xss过滤
+	                    if(v.indexOf("#")!=-1){
+	                    	xss = true;
+	                    }
 	                    
 	                    if(v.indexOf("|")!=-1){
 	                        
@@ -846,8 +856,12 @@ void function(){
 	                    else{
 	                        if(v=="i" && i){
 	                            return i;
-	                        }else{               
-	                            return parseItem(v,obj,i);
+	                        }else{       
+	                        	if(xss){
+	                        		return parseItem(v,obj,i);
+	                        	}else{
+	                        		return $.xss(parseItem(v,obj,i));
+	                        	}  
 	                        }
 
 	                    }
@@ -881,6 +895,7 @@ void function(){
 	                            newStr+= compile("list",[content,data[i],i]);
 	                        }
 	                    }
+
 	                    return newStr;
 
 	                });
@@ -1474,6 +1489,8 @@ function loyal(project,parent) {
 		this.view.protocol = function(){
 			return loyal.extend({},JSON.parse(JSON.stringify(options.view)));
 		}
+		this.net = options.net || {};
+		this.version = options.version || 1.0;
 
 		this.render = function(model, data) {
 
@@ -1517,7 +1534,7 @@ function loyal(project,parent) {
 	                });
 	                var fun;
 					eval('fun = function(){return '+express+'}');
-	                var data = fun.call(subClass.data);
+	                var data = fun.call(self.data);
 
 					if( !data ){
 						console.warn("render need data['"+name+"'] but is undefined");
@@ -2000,11 +2017,11 @@ function loyal(project,parent) {
 
 					$(this).on("change", function() {
 						if (($(this).attr("type") || "").match(/(checkbox)|(radio)/)) {
-							subClass.data[key] = $(this)[0].checked;
+							self.data[key] = $(this)[0].checked;
 						} else if ($(this).attr("type") === "text") {
-							subClass.data[key] = $(this).val();
+							self.data[key] = $(this).val();
 						}else{
-							subClass.data[key] = $(this).val();
+							self.data[key] = $(this).val();
 						}
 
 						self.method.change(key);
@@ -2012,11 +2029,11 @@ function loyal(project,parent) {
 
 
 					if (($(this).attr("type") || "").match(/(checkbox)|(radio)/)) {
-						subClass.data[key] = $(this)[0].checked;
+						self.data[key] = $(this)[0].checked;
 					} else if ($(this).attr("type") === "text") {
-						subClass.data[key] = $(this).val();
+						self.data[key] = $(this).val();
 					}else{
-						subClass.data[key] = $(this).val();
+						self.data[key] = $(this).val();
 					}
 
 					$(this).removeAttr("h-model");
@@ -2252,3 +2269,8 @@ loyal.init = function(){
 'function' === typeof define ? define(function(){
     return loyal;
 }) : window.loyal = loyal;
+
+try{
+	module.exports = loyal;
+}catch(e){};
+
