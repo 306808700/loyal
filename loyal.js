@@ -13,44 +13,6 @@ Array.prototype.insert = function(index, item) {
 	this.splice(index, 0, item);
 };
 
-/**
- * extend object.
- * means that properties in dest will be overwritten by the ones in src.
- * @param {Object} dest
- * @param {Object} src
- * @param {Boolean} [merge]
- * @returns {Object} dest
- */
-loyal
-/**
- * merge the values from src in the dest.
- * means that properties that exist in dest will not be overwritten by src
- * @param {Object} dest
- * @param {Object} src
- * @returns {Object} dest
- */
-function merge(dest, src) {
-    return extend(dest, src, true);
-}
-
-/**
- * simple class inheritance
- * @param {Function} child
- * @param {Function} base
- * @param {Object} [properties]
- */
-function inherit(child, base, properties) {
-    var baseP = base.prototype,
-        childP;
-
-    childP = child.prototype = Object.create(baseP);
-    childP.constructor = child;
-    childP._super = baseP;
-
-    if (properties) {
-        extend(childP, properties);
-    }
-}
 
 /*  
     dm.js 
