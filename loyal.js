@@ -14,10 +14,7 @@ Array.prototype.insert = function(index, item) {
 };
 
 
-/*  
-    dm.js 
-    dmimi 精简版
-*/
+
 void function(){
 	var DM = $ =  (function(){
 	    return  function(elem) {
