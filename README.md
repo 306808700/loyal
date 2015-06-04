@@ -1,5 +1,11 @@
 # loyal 1.0 beta
 
+## 先看demo
+
+http://dmimi.sinaapp.com/loyal/tabs.html
+
+
+
 创建于时间2015年4月22日，不依赖类库。
 
 这是什么东东，我想了一下，也许是一种可以改变开发者思维方式，让复杂的逻辑处理，变的简单的东东。
@@ -99,10 +105,6 @@
 ## 怎么用 ?
 
 这里有个例子可以看  （ps:本例子使用了 npm browserify ，所以可以直接使用require，你也可以这样“配置”，或者引入seajs 或者 requirejs 或者 干脆不用require，直接在tabs.html里面写script标签引入依赖的js，就像demo这样）
-
-## demo
-
-http://dmimi.sinaapp.com/loyal/tabs.html
 
 
 tabs.html
