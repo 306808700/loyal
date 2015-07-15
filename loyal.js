@@ -361,7 +361,7 @@ function loyal(project, parent) {
 
     /** 
      * REG
-     * @private 
+     * @static 
     */
     var REG = {
         html: "data",
