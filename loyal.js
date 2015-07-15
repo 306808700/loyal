@@ -1,43 +1,67 @@
 //@setting UTF-8
-Array.prototype.last = function() {
-    return this[this.length - 1]
-};
-Array.prototype.insert = function(index, item) {
-    if (index < 0) {
-        index = (this.length + 1) + index
-    }
-    this.splice(index, 0, item)
-};
-if (!Object.keys) {
-    Object.keys = (function() {
-        var hasOwnProperty = Object.prototype.hasOwnProperty,
-            hasDontEnumBug = !({
-                toString: null
-            }).propertyIsEnumerable('toString'),
-            dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
-            dontEnumsLength = dontEnums.length;
-        return function(obj) {
-            if (typeof obj !== 'object' && typeof obj !== 'function' || obj === null) throw new TypeError('Object.keys called on non-object');
-            var result = [];
-            for (var prop in obj) {
-                if (hasOwnProperty.call(obj, prop)) result.push(prop)
-            }
-            if (hasDontEnumBug) {
-                for (var i = 0; i < dontEnumsLength; i++) {
-                    if (hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i])
-                }
-            }
-            return result
+"use strict";
+
+/**
+ * @name loyal
+ * @version 0.0.5
+ * @author changyuan.lcy
+*/
+
+
+
+
+/** 
+ * es5
+ * @private 
+*/
+(function(){
+    Array.prototype.last = function() {
+        return this[this.length - 1]
+    };
+    Array.prototype.insert = function(index, item) {
+        if (index < 0) {
+            index = (this.length + 1) + index
         }
-    })()
-};
-if (!window.console) {
-    window.console = {};
-    var funcs = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn'];
-    for (var i = 0; i < funcs.length; i++) {
-        console[funcs[i]] = function() {}
+        this.splice(index, 0, item)
+    };
+    if (!Object.keys) {
+        Object.keys = (function() {
+            var hasOwnProperty = Object.prototype.hasOwnProperty,
+                hasDontEnumBug = !({
+                    toString: null
+                }).propertyIsEnumerable('toString'),
+                dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
+                dontEnumsLength = dontEnums.length;
+            return function(obj) {
+                if (typeof obj !== 'object' && typeof obj !== 'function' || obj === null) throw new TypeError('Object.keys called on non-object');
+                var result = [];
+                for (var prop in obj) {
+                    if (hasOwnProperty.call(obj, prop)) result.push(prop)
+                }
+                if (hasDontEnumBug) {
+                    for (var i = 0; i < dontEnumsLength; i++) {
+                        if (hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i])
+                    }
+                }
+                return result
+            }
+        })()
+    };
+    if (!window.console) {
+        window.console = {};
+        var funcs = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn'];
+        for (var i = 0; i < funcs.length; i++) {
+            console[funcs[i]] = function() {}
+        }
     }
-}(function($) {
+})();
+
+
+/** 
+ * add some funs 
+ * @private 
+*/
+(function($) {
     if (!$) {
         throw "loyal need a base framework jQuery or zepto or dmimi ";
     }
@@ -183,13 +207,15 @@ if (!window.console) {
                     var v1, v2, v3 = [];
                     var fn;
                     var param;
-                    v = v.replace(/[\{\}\s]/g, "");
                     var htmlCode;
+                    var textCode;
+
+                    v = v.replace(/[\{\}\s]/g, "");
+                    
                     if (v.indexOf("#") == 0) {
-                        console.log(v);
                         htmlCode = true
                     }
-                    var textCode;
+                    
                     if (v.indexOf("$") == 0) {
                         textCode = true
                     }
@@ -209,7 +235,7 @@ if (!window.console) {
                             }
                             return "this." + v
                         });
-                        eval('var fn1 = function(){return ' + v + '}');
+                        var fn1 = new Function('return ' + v);
                         return fn1.call(obj)
                     } else if (v.match(reg.isfunction)) {
                         return runFunction(v, [i])
@@ -247,27 +273,27 @@ if (!window.console) {
                         }
                         return "this." + v
                     });
-                    eval('var fn1 = function(){return ' + express + '}');
+                    var fn1 = new Function('return ' + express);
                     var data = fn1.call(json);
                     if (data) {
                         for (var i = 0; i < data.length; i++) {
-                            newStr += compile("list", [content, data[i], i])
+                            newStr += compile("list", [content, data[i], i]);
                         }
                     }
-                    return (newStr)
+                    return (newStr);
                 });
                 str = compile("normal", [str, json, json.i]);
-                return (str)
+                return (str);
             };
-            return render(str)
+            return render(str);
         },
         date: function(date, f) {
             if (!date || date[0] == "") {
-                date = new Date()
+                date = new Date();
             }
             var f = f || "yyyy-MM-dd hh:mm:ss";
             if (date == "刚刚") {
-                return date
+                return date;
             }
             if (typeof date != "object") {
                 if (!String(date).match(/\d*/)) {
@@ -324,9 +350,20 @@ if (!window.console) {
     }
 })($);
 
+
+
+/** 
+ * main
+ * @class
+*/
 function loyal(project, parent) {
     var self = this;
-    var reg = {
+
+    /** 
+     * REG
+     * @private 
+    */
+    var REG = {
         html: "data",
         attr: "(^class$)|(^id$)|(^type$)|(^h-[a-z]+)|(^href$)|(^style$)|(^src$)|(^controls$)|(^placeholder$)|(^height$)|(^width$)|(^value$)|(^for$)|(^data-)|(^name$)|(^checked$)|(^target$)",
         system: "text$|express|html|data$|protocol",
@@ -334,8 +371,18 @@ function loyal(project, parent) {
         removeEx: /\([^)]*\)/,
         prop: /[a-zA-Z'"]+/g
     };
+
+    /** 
+     * project
+     * @private 
+    */
     var project = project || {};
-    loyal.extend = function(dest, src, merge) {
+
+    /** 
+     * extend
+     * @private 
+    */
+    var extend = function(dest, src, merge) {
         var keys = Object.keys(src);
         var i = 0;
         while (i < keys.length) {
@@ -346,12 +393,23 @@ function loyal(project, parent) {
         }
         return dest
     }
-    loyal.uuid = function(obj) {
-        loyal.uuid.num = loyal.uuid.num || 0;
-        loyal.uuid.num++;
-        return loyal.uuid.num - 1
+
+    /** 
+     * uuid
+     * @private 
+    */
+    var returnUUID = function(){
+        loyal.uuid = loyal.uuid || 0;
+        loyal.uuid++;
+        return loyal.uuid;
     }
-    function child(options) {
+
+
+    /** 
+     * child
+     * @private 
+    */
+    function Internal(options) {
         var self = this;
         var domsArr = [];
         this.funs = {};
@@ -362,13 +420,13 @@ function loyal(project, parent) {
             this.wrap = $("body")
         }
         this.memory = {};
-        this.data = loyal.extend({}, options.data || {});
+        this.data = extend({}, options.data || {});
         if (!options.init) {
             options.init = function() {
                 this.run()
             }
         }
-        this.uuid = 0;
+        this.uuid = returnUUID();
         this.view = options.view || {};
         this.helper = options.helper;
         this.event = options.event;
@@ -379,7 +437,7 @@ function loyal(project, parent) {
         this.exports = options.exports || {};
         this.models = {};
         this.view.protocol = function() {
-            return loyal.extend({}, JSON.parse(JSON.stringify(options.view)))
+            return extend({}, JSON.parse(JSON.stringify(options.view)))
         }
         this.render = function(model, data) {
             var string = (this.method.parse(model, data, true));
@@ -396,6 +454,15 @@ function loyal(project, parent) {
         this.route = function(param) {
             window.location.href = window.location.href + "/" + param
         }
+
+        /**
+         * @exports run
+         * @param {object} model, it is view
+         * @param {object} data, it is json Data
+         * @param {string} name, where it want to push in
+         * @param {string} type, is  append or after and before ...
+         * @param {object} wrap, dom
+        */
         this.run = function(model, data, name, type, wrap) {
             if (!model) {
                 model = self.view
@@ -458,6 +525,13 @@ function loyal(project, parent) {
             });
             self.complete = true
         };
+
+        /**
+         * @exports data.add
+         * @param {string} key, 
+         * @param {all} value, 
+         * @param {int} position, array index
+        */
         this.data.add = function(key, value, position) {
             var index;
             if (!self.data[key]) {
@@ -473,9 +547,15 @@ function loyal(project, parent) {
             self.method.change(key, "add");
             return index - 1
         };
+
+        /**
+         * @exports data.remove
+         * @param {string} key, 
+         * @param {all} value, 
+        */
         this.data.remove = function(key, value) {
             if (key.indexOf(".") != -1 || key.indexOf("[") != -1) {
-                var arr = key.match(reg.prop);
+                var arr = key.match(REG.prop);
                 var end = arr.pop();
                 var str = "";
                 for (var i = 0; i < arr.length; i++) {
@@ -487,6 +567,13 @@ function loyal(project, parent) {
             }
             self.method.change(key, "remove")
         };
+
+        /**
+         * @exports data.update
+         * @param {string} key, 
+         * @param {all} value, 
+         * @param {boolean} norepeatBoolean, to control forced change
+        */
         this.data.update = function(key, value, norepeatBoolean) {
             if (key.constructor === Array) {
                 for (var i = 0; i < key.length; i++) {
@@ -495,7 +582,7 @@ function loyal(project, parent) {
                 return
             }
             if (key.indexOf(".") != -1 || key.indexOf("[") != -1) {
-                var arr = key.match(reg.prop);
+                var arr = key.match(REG.prop);
                 var end = arr.pop();
                 var str = "";
                 for (var i = 0; i < arr.length; i++) {
@@ -518,7 +605,12 @@ function loyal(project, parent) {
             self.method.change(key, "update");
             return value
         };
-        this.data.get = function(key, type) {
+
+        /**
+         * @exports data.get
+         * @param {string} key, support RegExp
+        */
+        this.data.get = function(key) {
             var temp;
             var arr = [];
             if (key.test && key.compile && key.exec) {
@@ -531,6 +623,11 @@ function loyal(project, parent) {
             }
             return self.data[key]
         };
+
+        /**
+         * @exports method
+         * @return {object}, @class
+        */
         this.method = {
             doms: function(dom) {
                 return domsArr.push(dom)
@@ -612,6 +709,12 @@ function loyal(project, parent) {
                     }
                 }
             },
+
+            /** 
+             * bind 
+             * @export
+             * @param {object} dom, dom 
+            */
             bind: function(dom) {
                 function funsAdd(arr, options) {
                     arr = arr || [];
@@ -660,13 +763,13 @@ function loyal(project, parent) {
                         param = [key]
                     }
                     if (func) {
-                        if (func.match(reg.param)) {
-                            param = param.concat(func.match(reg.param)[1].replace(/\s/g, ""))
+                        if (func.match(REG.param)) {
+                            param = param.concat(func.match(REG.param)[1].replace(/\s/g, ""))
                         }
-                        express = eval(jude(func).replace(reg.removeEx, ""))
+                        express = eval(jude(func).replace(REG.removeEx, ""))
                     } else {
                         func = key;
-                        express = jude(func).replace(reg.removeEx, "")
+                        express = jude(func).replace(REG.removeEx, "")
                     }
                     key = key.replace(/\s/g, "");
                     funs["class"] = funsAdd(funs["class"], {
@@ -748,10 +851,10 @@ function loyal(project, parent) {
                     for (var i = 0; i < moreArr.length; i++) {
                         var func = moreArr[i];
                         var param = [key];
-                        if (func.match(reg.param)) {
-                            param = param.concat(func.match(reg.param)[1].replace(/\s/g, ""))
+                        if (func.match(REG.param)) {
+                            param = param.concat(func.match(REG.param)[1].replace(/\s/g, ""))
                         }
-                        var express = jude(func).replace(reg.removeEx, "");
+                        var express = jude(func).replace(REG.removeEx, "");
                         eval(express).apply(self, [el, param])
                     }
                     $(this).removeAttr("h-init")
@@ -772,10 +875,10 @@ function loyal(project, parent) {
                             throw ("func is undefined");
                         }
                         var param = [key];
-                        if (func.match(reg.param)) {
-                            param = param.concat(func.match(reg.param)[1].replace(/\s/g, ""))
+                        if (func.match(REG.param)) {
+                            param = param.concat(func.match(REG.param)[1].replace(/\s/g, ""))
                         }
-                        var express = jude(func).replace(reg.removeEx, "");
+                        var express = jude(func).replace(REG.removeEx, "");
                         funs["watch"] = funsAdd(funs["watch"], {
                             el: el,
                             key: arr[0],
@@ -802,10 +905,10 @@ function loyal(project, parent) {
                             throw ("func is undefined");
                         }
                         var param = [key];
-                        if (func.match(reg.param)) {
-                            param = param.concat(func.match(reg.param)[1].replace(/\s/g, ""))
+                        if (func.match(REG.param)) {
+                            param = param.concat(func.match(REG.param)[1].replace(/\s/g, ""))
                         }
-                        var express = jude(func).replace(reg.removeEx, "");
+                        var express = jude(func).replace(REG.removeEx, "");
                         funs["watch"] = funsAdd(funs["watch"], {
                             mold: mold,
                             el: el,
@@ -837,10 +940,10 @@ function loyal(project, parent) {
                         if (!func) {
                             throw ("func is undefined");
                         }
-                        if (func.match(reg.param)) {
-                            param = param.concat(func.match(reg.param)[1].replace(/\s/g, ""))
+                        if (func.match(REG.param)) {
+                            param = param.concat(func.match(REG.param)[1].replace(/\s/g, ""))
                         }
-                        var express = jude(func).replace(reg.removeEx, "");
+                        var express = jude(func).replace(REG.removeEx, "");
                         funs["watch"] = funsAdd(funs["watch"], {
                             mold: mold,
                             el: el,
@@ -870,10 +973,10 @@ function loyal(project, parent) {
                         param = [key]
                     }
                     if (func) {
-                        if (func.match(reg.param)) {
-                            param = param.concat(func.match(reg.param)[1].replace(/\s/g, ""))
+                        if (func.match(REG.param)) {
+                            param = param.concat(func.match(REG.param)[1].replace(/\s/g, ""))
                         }
-                        express = jude(func).replace(reg.removeEx, "")
+                        express = jude(func).replace(REG.removeEx, "")
                     } else {}
                     key = key.replace(/\s/g, "");
                     $(this).on("change", function() {
@@ -915,11 +1018,11 @@ function loyal(project, parent) {
                         var model = arr[1].replace(/\s/g, "");
                         var param = "";
                         var selector;
-                        if (model.match(reg.param)) {
-                            param = model.match(reg.param)[1].replace(/['"\s]*/g, "");
+                        if (model.match(REG.param)) {
+                            param = model.match(REG.param)[1].replace(/['"\s]*/g, "");
                             param = param.split(",")
                         }
-                        var express = jude(model, "event").replace(reg.removeEx, "");
+                        var express = jude(model, "event").replace(REG.removeEx, "");
                         if (type.indexOf(",") != -1) {
                             selector = type.split(",")[1].replace(/\s/g, "")
                         }
@@ -951,6 +1054,11 @@ function loyal(project, parent) {
                     }
                 })
             },
+
+            /** 
+             * parse 
+             * @private
+            */
             parse: function(model, data) {
                 function _eval(r) {
                     return eval("/{" + r + "}/g")
@@ -963,12 +1071,12 @@ function loyal(project, parent) {
                         systems = {},
                         content = {};
                     for (var name in obj) {
-                        var attr = name.match(reg.attr);
+                        var attr = name.match(REG.attr);
                         if (attr) {
                             attrs[name] = obj[name];
                             continue
                         }
-                        var system = name.match(reg.system);
+                        var system = name.match(REG.system);
                         if (system) {
                             systems[name] = obj[name];
                             continue
@@ -977,7 +1085,7 @@ function loyal(project, parent) {
                             content[name] = obj[name];
                             continue
                         }
-                        var html = name.match(reg.html);
+                        var html = name.match(REG.html);
                         if (!html) {
                             childlens[name] = obj[name]
                         }
@@ -1030,23 +1138,24 @@ function loyal(project, parent) {
             }
         }
     }
-    child.protocolName = project.name;
-    child.prototype.__default = project;
+    Internal.protocolName = project.name;
+    Internal.prototype.__default = project;
     var options = {};
     if (parent) {
-        loyal.extend(options, parent.__default);
-        loyal.extend(options, project)
+        extend(options, parent.__default);
+        extend(options, project)
     } else {
-        loyal.extend(options, project);
+        extend(options, project);
         if (window.loyalSubClass && window.loyalSubClass[project.name]) {
-            loyal.extend(options, project, window.loyalSubClass[project.name])
+            extend(options, project, window.loyalSubClass[project.name])
         }
     }
-    var exports = new child(options);
+    var exports = new Internal(options);
     window.loyalSubClass = window.loyalSubClass || {};
     window.loyalSubClass[exports.name] = exports;
     return exports
 };
+
 loyal.pluginSup = {};
 loyal.plugin = function(name, func) {
     loyal.pluginSup[name] = func
