@@ -95,13 +95,6 @@ http://dmimi.sinaapp.com/loyal/tabs.html
 不要问我为何取这样的名字，我是不会告诉你乱打拼音首字母出来的HOHO。
 
 
-
-
-## 目前谁在用
-
-到今天为止只有作者本人在使用（因为今天才发上来） 如果你觉得原创精神可嘉（俨然是个轮子）或者看在码字不容易，帮忙点下右上角的 “★”，轻轻点一下就好啦。
-
-
 ## 怎么用 ?
 
 这里有个例子可以看  （ps:本例子使用了 npm browserify ，所以可以直接使用require，你也可以这样“配置”，或者引入seajs 或者 requirejs 或者 干脆不用require，直接在tabs.html里面写script标签引入依赖的js，就像demo这样）
