@@ -365,16 +365,16 @@ tabs.js
 
 // 控件的赋值
 "h-value":"active";
-	// if project.data.update("active","哈哈哈");
-	// then element.value === "哈哈哈";
+	// if project.data.update("active","文案");
+	// then element.value === "文案";
 
 
 
 
 // 元素内容
 "h-text":"active";
-	// if project.data.update("active","你妹");
-	// then element.text() === "你妹";
+	// if project.data.update("active","文案");
+	// then element.text() === "文案";
 
 
 
